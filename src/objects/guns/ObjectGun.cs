@@ -14,16 +14,9 @@ namespace TopdownShooter.objects.guns
 
         public override void _Ready()
         {
-            GetNode("RofTimer").Connect("timeout", this, nameof(_on_RofTimer_timeout));
-
             GetNode<Timer>("RofTimer").WaitTime = _rateOfFire / 1000f;
         }
-
-        // public override void _Process(float delta)
-        // {
-        //     Shoot();
-        // }
-
+        
         public void Shoot()
         {
             if (!_canShoot) return;

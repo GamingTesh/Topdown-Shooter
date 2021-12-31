@@ -8,7 +8,7 @@ namespace TopdownShooter.actors.enemies
         private KinematicBody _player;
 
         private Vector3[] _path;
-        private int _currentNode = 0;
+        private int _currentNode;
 
         [Export] private float _speed = 2;
 
@@ -16,8 +16,6 @@ namespace TopdownShooter.actors.enemies
         {
             _nav = GetNode<Navigation>("../Navigation");
             _player = GetNode<KinematicBody>("../Player");
-            
-            GetNode("Timer").Connect("timeout", this, nameof(_on_Timer_timeout));
         }
 
         public override void _PhysicsProcess(float delta)
@@ -42,9 +40,13 @@ namespace TopdownShooter.actors.enemies
 
         public void _on_Timer_timeout()
         {
-            GD.Print("Looking for player!");
             UpdatePath(_player.GlobalTransform.origin);
             _currentNode = 0;
+        }
+
+        public void _on_Stats_Dead()
+        {
+            QueueFree();
         }
     }
 }
