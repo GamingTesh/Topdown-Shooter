@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/objects/guns/bullets/ObjectBullet.cs" type="Script" id=1]
 
@@ -7,6 +7,9 @@
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.168627, 0.168627, 0.168627, 1 )
 
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.100279, 0.099481, 0.100584 )
+
 [node name="Bullet" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -14,3 +17,8 @@ script = ExtResource( 1 )
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
+
+[node name="Area" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 3 )

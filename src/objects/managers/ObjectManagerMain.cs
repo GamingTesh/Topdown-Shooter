@@ -21,8 +21,8 @@ namespace TopdownShooter.objects.managers
             if (intersection.Count == 0) return;
 
             var pos = (Vector3) intersection["position"];
-            var lookAtMe = new Vector3(pos.x, GetNode<KinematicBody>("Actors/ActorPlayer").Translation.y, pos.z);
-            GetNode<KinematicBody>("Actors/ActorPlayer").LookAt(lookAtMe, Vector3.Up);
+            var lookAtMe = new Vector3(pos.x, GetNode<KinematicBody>("Player").Translation.y, pos.z);
+            GetNode<KinematicBody>("Player").LookAt(lookAtMe, Vector3.Up);
         }
     }
 }

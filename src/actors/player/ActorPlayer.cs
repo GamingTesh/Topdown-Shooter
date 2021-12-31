@@ -19,7 +19,6 @@ namespace TopdownShooter.actors.player
 		public override void _Process(float delta)
 		{
 			// movement
-			
 			_direction = new Vector3();
 
 			if (Input.IsActionPressed("move_right"))

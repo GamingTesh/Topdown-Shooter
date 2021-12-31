@@ -59,7 +59,7 @@ fire={
 [mono]
 
 debugger_agent/wait_for_debugger=true
-debugger_agent/wait_timeout=10000
+debugger_agent/wait_timeout=15000
 
 [physics]
 
@@ -67,4 +67,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"
