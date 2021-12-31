@@ -1,21 +1,50 @@
 using Godot;
-using System;
 
-public class ActorEnemy : KinematicBody
+namespace TopdownShooter.actors.enemies
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
-
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    public class ActorEnemy : KinematicBody
     {
-        
-    }
+        private Navigation _nav;
+        private KinematicBody _player;
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+        private Vector3[] _path;
+        private int _currentNode = 0;
+
+        [Export] private float _speed = 2;
+
+        public override void _Ready()
+        {
+            _nav = GetNode<Navigation>("../Navigation");
+            _player = GetNode<KinematicBody>("../Player");
+            
+            GetNode("Timer").Connect("timeout", this, nameof(_on_Timer_timeout));
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if (_path == null)
+                return;
+            
+            if (_currentNode >= _path.Length)
+                return;
+
+            var direction = _path[_currentNode] - GlobalTransform.origin;
+            if (direction.Length() < 1)
+                _currentNode += 1;
+            else
+                MoveAndSlide(direction.Normalized() * _speed);
+        }
+
+        private void UpdatePath(Vector3 targetPosition)
+        {
+            _path = _nav.GetSimplePath(GlobalTransform.origin, targetPosition);
+        }
+
+        public void _on_Timer_timeout()
+        {
+            GD.Print("Looking for player!");
+            UpdatePath(_player.GlobalTransform.origin);
+            _currentNode = 0;
+        }
+    }
 }
